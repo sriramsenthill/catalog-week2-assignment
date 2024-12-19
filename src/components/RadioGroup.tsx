@@ -4,29 +4,28 @@ import React from 'react';
 interface RadioGroupProps {
     label: string;
     name: string;
-    options: { value: string; label: string }[];
     selectedValue?: string;
-    onChange?: (name: string, value: string) => void;
+    options: Array<{ value: string; label: string }>;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const RadioGroup: React.FC<RadioGroupProps> = ({ label, name, options, selectedValue = '', onChange }) => (
+const RadioGroup = ({ label, name, selectedValue, options, onChange }: RadioGroupProps) => (
     <fieldset className="mb-4">
-        <legend className="block text-sm font-medium text-gray-700">{label}</legend>
-        <div className="mt-1">
-            {options.map((option) => (
-                <label key={option.value} className="inline-flex items-center mr-4">
+        <legend className="block mb-1">{label}</legend>
+        {options.map(option => (
+            <div key={option.value}>
+                <label>
                     <input
                         type="radio"
                         name={name}
                         value={option.value}
                         checked={selectedValue === option.value}
-                        onChange={() => onChange && onChange(name, option.value)}
-                        className="form-radio h-4 w-4 text-blue-600 transition duration-150 ease-in-out"
+                        onChange={onChange}
                     />
-                    <span className="ml-2">{option.label}</span>
+                    {option.label}
                 </label>
-            ))}
-        </div>
+            </div>
+        ))}
     </fieldset>
 );
 

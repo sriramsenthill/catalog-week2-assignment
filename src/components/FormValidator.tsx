@@ -4,12 +4,19 @@ import useForm from '../hooks/useForm';
 import InputField from './InputField';
 import SelectField from './SelectField';
 import RadioGroup from './RadioGroup';
+import { Field } from '../types/types';
 
-interface FormValidatorProps<T> {
-    initialValues: { [key in keyof T]: { value?: any; validationRules?: ValidationRule[] } };
+interface FormValidatorProps {
+    fields: Field[];
+    validationRules: Record<string, ValidationRule[]>;
 }
 
-const FormValidator = <T extends Record<string, any>>({ initialValues }: FormValidatorProps<T>) => {
+const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
+    const initialValues = fields.reduce((acc, field) => {
+        acc[field.name] = { value: '', validationRules: validationRules[field.name] || [] };
+        return acc;
+    }, {} as Record<string, any>);
+
     const { values, errors, handleChange, handleSubmit } = useForm(initialValues);
 
     const onSubmit = () => {
@@ -25,54 +32,42 @@ const FormValidator = <T extends Record<string, any>>({ initialValues }: FormVal
             }}
             className="p-4 border rounded shadow-md"
         >
-            {Object.keys(initialValues).map((key) => {
-                if (key === "city") {
+            {fields.map((field) => {
+                if (field.type === "select") {
                     return (
                         <SelectField
-                            key={key}
-                            label={key.charAt(0).toUpperCase() + key.slice(1)}
-                            name={key}
-                            value={values[key] || ''} // Ensure it's a string for dropdown
-                            options={[
-                                { value: 'new-york', label: 'New York' },
-                                { value: 'los-angeles', label: 'Los Angeles' },
-                                { value: 'chicago', label: 'Chicago' },
-                                { value: 'houston', label: 'Houston' }
-                            ]}
+                            key={field.name}
+                            label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
+                            name={field.name}
+                            value={values[field.name]?.value || ''}
+                            options={field.options!.map(option => ({ value: option.toLowerCase().replace(/ /g, '-'), label: option }))}
                             onChange={handleChange}
-                            error={errors[key]}
+                            error={errors[field.name]}
                         />
                     );
                 }
-                if (key === "gender") {
+                if (field.type === "radio") {
                     return (
                         <RadioGroup
-                            key={key}
-                            label="Gender"
-                            name={key}
-                            selectedValue={values[key] || ''} // Ensure it's a string for radio buttons
-                            options={[
-                                { value: 'male', label: 'Male' },
-                                { value: 'female', label: 'Female' }
-                            ]}
+                            key={field.name}
+                            label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
+                            name={field.name}
+                            selectedValue={values[field.name]?.value || ''}
+                            options={field.options!.map(option => ({ value: option.toLowerCase(), label: option }))}
                             onChange={handleChange}
                         />
                     );
                 }
-                const inputType =
-                    key === "email" ? "email" :
-                        key === "password" ? "password" :
-                            key === "age" ? "number" : "text";
 
                 return (
                     <InputField
-                        key={key}
-                        label={key.charAt(0).toUpperCase() + key.slice(1)}
-                        name={key}
-                        type={inputType} // Use appropriate input type here
-                        value={values[key] || ''} // Ensure it's a string for text input; access .value here if using objects in state.
+                        key={field.name}
+                        label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
+                        name={field.name}
+                        type={field.type || "text"}
+                        value={values[field.name]?.value || ''}
                         onChange={handleChange}
-                        error={errors[key]}
+                        error={errors[field.name]}
                     />
                 );
             })}

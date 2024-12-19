@@ -4,23 +4,24 @@ import React from 'react';
 interface InputFieldProps {
     label: string;
     name: string;
-    type?: string; // Allow specifying the input type
+    type?: string;
     value?: string;
-    onChange?: (name: string, value?: string) => void;
-    error?: string[];
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    error?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({ label, name, type = 'text', value = '', onChange, error }) => (
+const InputField = ({ label, name, type = "text", value, onChange, error }: InputFieldProps) => (
     <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">{label}</label>
+        <label className="block mb-1" htmlFor={name}>{label}</label>
         <input
-            type={type} // Use the specified type here
+            className={`border rounded p-2 w-full ${error ? 'border-red-500' : ''}`}
+            id={name}
             name={name}
-            value={value} // Ensure this is a string
-            onChange={(e) => onChange && onChange(name, e.target.value)} // Call onChange with correct parameters
-            className={`mt-1 block w-full border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring focus:ring-blue-300`}
+            type={type}
+            value={value}
+            onChange={onChange}
         />
-        {error && <div className="text-red-500 text-sm">{error.join(', ')}</div>}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
 );
 

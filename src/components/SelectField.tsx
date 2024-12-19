@@ -4,29 +4,30 @@ import React from 'react';
 interface SelectFieldProps {
     label: string;
     name: string;
-    value?: string; // The selected value should be a string
-    options: { value: string; label: string }[];
-    onChange?: (name: string, value?: string) => void;
-    error?: string[];
+    value?: string;
+    options: Array<{ value: string; label: string }>;
+    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+    error?: string;
 }
 
-const SelectField: React.FC<SelectFieldProps> = ({ label, name, value = "", options, onChange, error }) => (
+const SelectField = ({ label, name, value, options, onChange, error }: SelectFieldProps) => (
     <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">{label}</label>
+        <label className="block mb-1" htmlFor={name}>{label}</label>
         <select
+            className={`border rounded p-2 w-full ${error ? 'border-red-500' : ''}`}
+            id={name}
             name={name}
             value={value}
-            onChange={(e) => onChange && onChange(name, e.target.value)}
-            className={`mt-1 block w-full border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring focus:ring-blue-300`}
+            onChange={onChange}
         >
-            <option value="">Select a city</option>
-            {options.map((option) => (
+            <option value="">Select...</option>
+            {options.map(option => (
                 <option key={option.value} value={option.value}>
                     {option.label}
                 </option>
             ))}
         </select>
-        {error && <div className="text-red-500 text-sm">{error.join(', ')}</div>}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
     </div>
 );
 
