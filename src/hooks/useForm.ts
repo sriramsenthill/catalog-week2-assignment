@@ -1,43 +1,42 @@
 // src/hooks/useForm.ts
 import { useState } from 'react';
 
-interface FormValues {
-    [key: string]: any;
-}
-
 interface ValidationRule {
-    rule: (value: any) => boolean;
+    rule: (value: string) => boolean; // Expecting a string for validation
     message: string;
 }
 
-interface FieldConfig {
-    value: any;
-    validationRules?: ValidationRule[];
-}
+const useForm = (initialValues: { [key: string]: { value: string; validationRules?: ValidationRule[] } }) => {
+    // Initialize form values as empty strings
+    const [values, setValues] = useState<{ [key: string]: string }>(
+        Object.keys(initialValues).reduce((acc, key) => {
+            acc[key] = ''; // Initialize each field to an empty string
+            return acc;
+        }, {} as { [key: string]: string })
+    );
 
-const useForm = (initialValues: FormValues) => {
-    const [values, setValues] = useState<FormValues>(initialValues);
-    const [errors, setErrors] = useState<FormValues>({});
+    const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
 
-    const handleChange = (name: string, value: any) => {
-        setValues({ ...values, [name]: value });
+    const handleChange = (name: string, value: string) => {
+        // Update state with new value
+        setValues((prev) => ({ ...prev, [name]: value }));
 
         // Validate on change
         validateField(name, value);
     };
 
-    const validateField = (name: string, value: any) => {
-        const fieldConfig: FieldConfig = initialValues[name];
+    const validateField = (name: string, value: string) => {
+        const fieldConfig = initialValues[name];
         if (fieldConfig?.validationRules) {
             const fieldErrors = fieldConfig.validationRules
                 .filter(rule => !rule.rule(value))
                 .map(rule => rule.message);
-            setErrors({ ...errors, [name]: fieldErrors });
+            setErrors((prev) => ({ ...prev, [name]: fieldErrors }));
         }
     };
 
-    const handleSubmit = (callback: (values: FormValues) => void) => {
-        const newErrors: FormValues = {};
+    const handleSubmit = (callback: (values: { [key: string]: string }) => void) => {
+        const newErrors: { [key: string]: string[] } = {};
         let isValid = true;
 
         Object.keys(initialValues).forEach(name => {
