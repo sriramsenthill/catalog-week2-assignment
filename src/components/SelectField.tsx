@@ -18,7 +18,7 @@ const SelectField = ({ label, name, value, options, onChange, error }: SelectFie
             name={name}
             value={value}
             onChange={onChange}
-            className={`bg-[#57aa82] text-white rounded-xl p-4 w-full ${error ? 'border-red-500' : ''}`}
+            className={`bg-[#57aa82] text-white rounded-xl p-4 w-full  focus:outline-none ${error ? 'border-red-500' : ''}`}
         >
             <option value="">Select...</option>
             {options.map(option => (

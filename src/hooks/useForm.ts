@@ -13,8 +13,11 @@ const useForm = (initialValues: FormData) => {
             [name]: { ...prevValues[name], value }
         }));
 
-        // Validate on change
-        validateField(name, value);
+        // Clear error message when user types
+        setErrors((prevErrors) => ({
+            ...prevErrors,
+            [name]: '', // Clear specific error
+        }));
     };
 
     const validateField = (name: string, value: any) => {
@@ -28,24 +31,28 @@ const useForm = (initialValues: FormData) => {
             }
         }
 
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: errorMessage,
-        }));
+        return errorMessage; // Return the error message
     };
 
     const handleSubmit = (callback: () => void) => {
+        let newErrors: Record<string, string> = {};
         let hasErrors = false;
 
         Object.keys(values).forEach((key) => {
             const value = values[key].value;
-            validateField(key, value);
-            if (errors[key]) hasErrors = true;
+            const errorMessage = validateField(key, value);
+            if (errorMessage) {
+                newErrors[key] = errorMessage;
+                hasErrors = true;
+            }
         });
 
-        if (!hasErrors) {
-            callback();
+        if (hasErrors) {
+            setErrors(newErrors); // Set all errors at once
+            return; // Prevent submission if there are errors
         }
+
+        callback(); // Call the provided callback function for successful submission
     };
 
     return { values, errors, handleChange, handleSubmit };

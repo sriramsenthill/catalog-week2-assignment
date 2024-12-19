@@ -22,7 +22,7 @@ const RadioGroup = ({ label, name, selectedValue, options, onChange }: RadioGrou
                             value={option.value}
                             checked={selectedValue === option.value}
                             onChange={onChange}
-                            className="mr-2"
+                            className="mr-2 "
                         />
                         {option.label}
                     </label>

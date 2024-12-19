@@ -5,6 +5,7 @@ import InputField from './InputField';
 import SelectField from './SelectField';
 import RadioGroup from './RadioGroup';
 import { Field } from '../types/types';
+import { validationRules } from '../validation/validationRules'; // Import your validation rules
 
 interface FormValidatorProps {
     fields: Field[];
@@ -12,7 +13,7 @@ interface FormValidatorProps {
 
 const FormValidator = ({ fields }: FormValidatorProps) => {
     const initialValues = fields.reduce((acc, field) => {
-        acc[field.name] = { value: '', validationRules: [] };
+        acc[field.name] = { value: '', validationRules: validationRules[field.name] || [] }; // Apply validation rules here
         return acc;
     }, {} as Record<string, any>);
 
@@ -28,7 +29,7 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
                 e.preventDefault();
                 handleSubmit(onSubmit);
             }}
-            className="bg-[#73b99b] p-6 rounded-2xl max-w-md mx-auto fade-in"
+            className="bg-[#73b99b] p-6 rounded-2xl max-w-md mx-auto"
         >
             {fields.map((field, index) => {
                 if (field.type === "select") {
