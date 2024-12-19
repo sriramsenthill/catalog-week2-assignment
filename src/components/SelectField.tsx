@@ -11,14 +11,14 @@ interface SelectFieldProps {
 }
 
 const SelectField = ({ label, name, value, options, onChange, error }: SelectFieldProps) => (
-    <div className="mb-4">
-        <label className="block mb-1" htmlFor={name}>{label}</label>
+    <div className="mb-4 flex flex-col w-full gap-y-2">
+        <label className="block mb-1 text-white font-bold" htmlFor={name}>{label}</label>
         <select
-            className={`border rounded p-2 w-full ${error ? 'border-red-500' : ''}`}
             id={name}
             name={name}
             value={value}
             onChange={onChange}
+            className={`bg-[#57aa82] text-white rounded-xl p-4 w-full ${error ? 'border-red-500' : ''}`}
         >
             <option value="">Select...</option>
             {options.map(option => (

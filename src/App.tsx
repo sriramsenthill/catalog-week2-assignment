@@ -1,12 +1,9 @@
 // src/App.tsx
-import './App.css';
 import React from 'react';
 import FormValidator from './components/FormValidator';
-import { validationRules } from './validation/validationRules';
 import { Field } from './types/types';
 
 const App = () => {
-
   const fields: Field[] = [
     { name: 'username', type: 'text' },
     { name: 'email', type: 'email' },
@@ -17,9 +14,10 @@ const App = () => {
   ];
 
   return (
-    <div className="container mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Form Validator Widget</h1>
-      <FormValidator fields={fields} validationRules={validationRules} />
+    <div className="bg-[#d1f4e7] min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full">
+        <FormValidator fields={fields} />
+      </div>
     </div>
   );
 };

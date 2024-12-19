@@ -2,30 +2,30 @@
 
 // Define the type for validation rules
 export interface ValidationRule {
-    rule: (value: string | number) => boolean; // Accepts both string and number for flexibility
+    rule: (value: string | number) => boolean;
     message: string;
 }
 
 // Define the shape of initial values for form fields
 export interface FormField<T> {
-    value?: T; // Generic type to allow different types (string, number, etc.)
+    value?: T;
     validationRules?: ValidationRule[];
 }
 
 // Define the shape of your form data using generics
 export interface FormData {
-    [key: string]: FormField<any>; // Allows any field name with corresponding FormField structure
+    [key: string]: FormField<any>;
 }
 
 // Define the shape of a field used in FormValidator component
 export interface Field {
     name: string;
-    type?: string; // Optional type for input (text, email, password, etc.)
-    options?: string[]; // Optional options for select or radio inputs
+    type?: string;
+    options?: string[];
 }
 
 // Define props for the FormValidator component
 export interface FormValidatorProps {
-    fields: Field[]; // Array of fields to be rendered in the form
-    validationRules: Record<string, ValidationRule[]>; // Object mapping field names to their validation rules
+    fields: Field[];
+    validationRules: Record<string, ValidationRule[]>;
 }

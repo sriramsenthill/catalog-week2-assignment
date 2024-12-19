@@ -1,5 +1,5 @@
 // src/validation/validationRules.ts
-import { ValidationRule } from '../types/types'; // Import the ValidationRule type
+import { ValidationRule } from '../types/types';
 
 export const validationRules: Record<string, ValidationRule[]> = {
     username: [
@@ -19,8 +19,7 @@ export const validationRules: Record<string, ValidationRule[]> = {
     age: [
         {
             rule: (val) => {
-                const numVal = Number(val); // Convert the input to a number
-                // Check if numVal is an integer and then perform the comparison
+                const numVal = Number(val);
                 return Number.isInteger(numVal) && numVal > 0 && numVal < 120;
             },
             message: 'Age must be a valid number between 1 and 120.'

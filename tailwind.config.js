@@ -1,11 +1,15 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+// tailwind.config.js
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        satoshi: ['Satoshi', 'Helvetica Neue', 'sans-serif'], // Custom font family
+      },
+    },
   },
   plugins: [],
-}
+};

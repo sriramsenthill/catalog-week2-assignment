@@ -8,12 +8,11 @@ import { Field } from '../types/types';
 
 interface FormValidatorProps {
     fields: Field[];
-    validationRules: Record<string, ValidationRule[]>;
 }
 
-const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
+const FormValidator = ({ fields }: FormValidatorProps) => {
     const initialValues = fields.reduce((acc, field) => {
-        acc[field.name] = { value: '', validationRules: validationRules[field.name] || [] };
+        acc[field.name] = { value: '', validationRules: [] };
         return acc;
     }, {} as Record<string, any>);
 
@@ -21,7 +20,6 @@ const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
 
     const onSubmit = () => {
         console.log('Form submitted successfully:', values);
-        // Handle successful form submission here (e.g., API call)
     };
 
     return (
@@ -30,13 +28,13 @@ const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
                 e.preventDefault();
                 handleSubmit(onSubmit);
             }}
-            className="p-4 border rounded shadow-md"
+            className="bg-[#73b99b] p-6 rounded-2xl max-w-md mx-auto fade-in"
         >
-            {fields.map((field) => {
+            {fields.map((field, index) => {
                 if (field.type === "select") {
                     return (
                         <SelectField
-                            key={field.name}
+                            key={`${field.name}-${index}`}
                             label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
                             name={field.name}
                             value={values[field.name]?.value || ''}
@@ -48,20 +46,21 @@ const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
                 }
                 if (field.type === "radio") {
                     return (
-                        <RadioGroup
-                            key={field.name}
-                            label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
-                            name={field.name}
-                            selectedValue={values[field.name]?.value || ''}
-                            options={field.options!.map(option => ({ value: option.toLowerCase(), label: option }))}
-                            onChange={handleChange}
-                        />
+                        <div className="text-white" key={`${field.name}-${index}`}>
+                            <RadioGroup
+                                label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
+                                name={field.name}
+                                selectedValue={values[field.name]?.value || ''}
+                                options={field.options!.map(option => ({ value: option.toLowerCase(), label: option }))}
+                                onChange={handleChange}
+                            />
+                        </div>
                     );
                 }
 
                 return (
                     <InputField
-                        key={field.name}
+                        key={`${field.name}-${index}`}
                         label={field.name.charAt(0).toUpperCase() + field.name.slice(1)}
                         name={field.name}
                         type={field.type || "text"}
@@ -71,7 +70,10 @@ const FormValidator = ({ fields, validationRules }: FormValidatorProps) => {
                     />
                 );
             })}
-            <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+            <button
+                type="submit"
+                className="flex font-bold items-center justify-center w-full bg-[#cd7092] rounded-full p-2 px-4 text-white cursor-pointer mt-4"
+            >
                 Submit
             </button>
         </form>

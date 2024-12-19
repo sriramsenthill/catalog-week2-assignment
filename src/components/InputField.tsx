@@ -11,10 +11,10 @@ interface InputFieldProps {
 }
 
 const InputField = ({ label, name, type = "text", value, onChange, error }: InputFieldProps) => (
-    <div className="mb-4">
-        <label className="block mb-1" htmlFor={name}>{label}</label>
+    <div className="mb-4 flex flex-col w-full gap-y-2">
+        <label className="block mb-1 text-white font-bold" htmlFor={name}>{label}</label>
         <input
-            className={`border rounded p-2 w-full ${error ? 'border-red-500' : ''}`}
+            className={`bg-[#57aa82] text-white rounded-xl p-4 w-full ${error ? 'border-red-500' : ""}`}
             id={name}
             name={name}
             type={type}
