@@ -2,13 +2,19 @@
 import { ValidationRule } from '../types/types';
 
 export const validationRules: Record<string, ValidationRule[]> = {
-    username: [
-        { rule: (val) => !!val.trim(), message: 'Username is required' },
+    name: [
+        { rule: (val) => !!val.trim(), message: 'Name is required' },
+        { rule: (val) => /^[A-Za-z\s]+$/.test(val), message: 'Name must contain only letters.' }, // New rule for only letters
     ],
     email: [
+        { rule: (val) => !!val.trim(), message: 'Email is required' }, // Added required check
         { rule: (val) => /\S+@\S+\.\S+/.test(val), message: 'Email is invalid' },
     ],
     password: [
+        {
+            rule: (val) => !!val.trim(), // Check for required
+            message: 'Password is required',
+        },
         {
             rule: (val) =>
                 /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(val),
@@ -18,6 +24,10 @@ export const validationRules: Record<string, ValidationRule[]> = {
     ],
     age: [
         {
+            rule: (val) => !!val.trim(), // Check for required
+            message: 'Age is required',
+        },
+        {
             rule: (val) => {
                 const numVal = Number(val);
                 return Number.isInteger(numVal) && numVal > 0 && numVal < 120;
@@ -26,9 +36,9 @@ export const validationRules: Record<string, ValidationRule[]> = {
         }
     ],
     city: [
-        { rule: (val) => !!val, message: 'City is required.' },
+        { rule: (val) => !!val.trim(), message: 'City is required.' }, // Added required check
     ],
     gender: [
-        { rule: (val) => !!val, message: 'Gender is required.' },
+        { rule: (val) => !!val.trim(), message: 'Gender is required.' }, // Added required check
     ],
 };

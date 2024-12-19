@@ -1,10 +1,25 @@
 // src/hooks/useForm.ts
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FormData } from '../types/types';
 
 const useForm = (initialValues: FormData) => {
     const [values, setValues] = useState<FormData>(initialValues);
     const [errors, setErrors] = useState<Record<string, string>>({});
+    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null); // For managing the timeout
+
+    const validateField = (name: string, value: any) => {
+        const fieldRules = values[name]?.validationRules || [];
+        let errorMessage = '';
+
+        for (const rule of fieldRules) {
+            if (!rule.rule(value)) {
+                errorMessage = rule.message;
+                break; // Stop checking further rules once an error is found
+            }
+        }
+
+        return errorMessage; // Return the error message or an empty string if valid
+    };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = event.target;
@@ -18,20 +33,22 @@ const useForm = (initialValues: FormData) => {
             ...prevErrors,
             [name]: '', // Clear specific error
         }));
-    };
 
-    const validateField = (name: string, value: any) => {
-        const fieldRules = values[name]?.validationRules || [];
-        let errorMessage = '';
-
-        for (const rule of fieldRules) {
-            if (!rule.rule(value)) {
-                errorMessage = rule.message;
-                break;
-            }
+        // Clear previous timeout if it exists
+        if (debounceTimeout) {
+            clearTimeout(debounceTimeout);
         }
 
-        return errorMessage; // Return the error message
+        // Set a new timeout for validation
+        const newTimeout = setTimeout(() => {
+            const errorMessage = validateField(name, value);
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                [name]: errorMessage,
+            }));
+        }, 800); // 1000 ms delay
+
+        setDebounceTimeout(newTimeout); // Save the timeout ID
     };
 
     const handleSubmit = (callback: () => void) => {

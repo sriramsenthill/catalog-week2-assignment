@@ -17,10 +17,55 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
         return acc;
     }, {} as Record<string, any>);
 
-    const { values, errors, handleChange, handleSubmit } = useForm(initialValues);
+    const { values, errors, handleChange, handleSubmit, setErrors } = useForm(initialValues);
 
     const onSubmit = () => {
+        const newErrors: Record<string, string> = {};
+
+        // Validate each field only on submit
+        fields.forEach(field => {
+            const value = values[field.name]?.value;
+
+            // Check for required fields first
+            if (!value) {
+                newErrors[field.name] = 'This field is required.'; // Set required error message
+            } else {
+                // Validate against specific rules if the field is not empty
+                const errorMessage = validateField(field.name, value);
+                if (errorMessage) {
+                    newErrors[field.name] = errorMessage; // Set specific error message
+                }
+            }
+        });
+
+        // Special case for radio groups
+        fields.forEach(field => {
+            if (field.type === "radio" && !values[field.name]?.value) {
+                newErrors[field.name] = 'This field is required.'; // Set required error message for radio group
+            }
+        });
+
+        if (Object.keys(newErrors).length > 0) {
+            // If there are errors, set them and prevent submission
+            setErrors(newErrors);
+            return;
+        }
+
         console.log('Form submitted successfully:', values);
+    };
+
+    const validateField = (name: string, value: string) => {
+        const fieldRules = values[name]?.validationRules || [];
+        let errorMessage = '';
+
+        for (const rule of fieldRules) {
+            if (!rule.rule(value)) {
+                errorMessage = rule.message;
+                break; // Stop checking further rules once an error is found
+            }
+        }
+
+        return errorMessage; // Return the error message or an empty string if valid
     };
 
     return (
@@ -54,6 +99,7 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
                                 selectedValue={values[field.name]?.value || ''}
                                 options={field.options!.map(option => ({ value: option.toLowerCase(), label: option }))}
                                 onChange={handleChange}
+                                error={errors[field.name]} // Pass error message to RadioGroup
                             />
                         </div>
                     );

@@ -7,11 +7,14 @@ interface RadioGroupProps {
     selectedValue?: string;
     options: Array<{ value: string; label: string }>;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    error?: string;
 }
 
-const RadioGroup = ({ label, name, selectedValue, options, onChange }: RadioGroupProps) => (
+const RadioGroup = ({ label, name, selectedValue, options, onChange, error }: RadioGroupProps) => (
     <fieldset className="mb-4 flex flex-col w-full gap-y-2">
-        <legend className="block mb-1 text-custom-gray font-bold">{label}</legend>
+        <label className="block mb-1 text-custom-gray font-bold" htmlFor={name}>
+            {label} {error && <span className="text-red-500">- Required</span>} {/* Show required message only if there's an error */}
+        </label>
         <div className="flex items-center space-x-4">
             {options.map(option => (
                 <div key={option.value} className="flex items-center">
@@ -29,6 +32,7 @@ const RadioGroup = ({ label, name, selectedValue, options, onChange }: RadioGrou
                 </div>
             ))}
         </div>
+        {error && <p className="text-red-500 text-sm">{error}</p>}
     </fieldset>
 );
 

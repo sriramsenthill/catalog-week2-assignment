@@ -5,7 +5,7 @@ import { Field } from './types/types';
 
 const App = () => {
   const fields: Field[] = [
-    { name: 'username', type: 'text' },
+    { name: 'name', type: 'text' },
     { name: 'email', type: 'email' },
     { name: 'password', type: 'password' },
     { name: 'age', type: 'number' },
