@@ -10,7 +10,7 @@ const App = () => {
     { name: 'password', type: 'password' },
     { name: 'age', type: 'number' },
     { name: 'city', type: 'select', options: ['New York', 'Los Angeles', 'Chicago', 'Houston'] },
-    { name: 'gender', type: 'radio', options: ['male', 'female'] }
+    { name: 'gender', type: 'radio', options: ['Male', 'Female'] }
   ];
 
   return (
