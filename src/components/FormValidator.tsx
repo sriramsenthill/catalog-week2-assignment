@@ -29,7 +29,7 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
                 e.preventDefault();
                 handleSubmit(onSubmit);
             }}
-            className="bg-[#73b99b] p-6 rounded-2xl max-w-md mx-auto"
+            className="bg-white bg-opacity-50 p-6 rounded-2xl max-w-md mx-auto"
         >
             {fields.map((field, index) => {
                 if (field.type === "select") {

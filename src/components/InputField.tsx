@@ -13,11 +13,11 @@ interface InputFieldProps {
 const InputField = ({ label, name, type = "text", value, onChange, error }: InputFieldProps) => {
     return (
         <div className="mb-4 flex flex-col w-full gap-y-2">
-            <label className="block mb-1 text-white font-bold" htmlFor={name}>
+            <label className="block mb-1 text-custom-gray font-bold" htmlFor={name}>
                 {label} {error && <span className="text-red-500">- Required</span>} {/* Show required message only if there's an error */}
             </label>
             <input
-                className={`bg-[#57aa82] text-white rounded-xl p-4 w-full focus:outline-none ${error ? 'border-red-500' : ''}`} // Highlight in red if there's an error
+                className={`shadow-slate-300  text-custom-gray rounded-xl p-4 w-full focus:outline-none ${error ? 'border-red-500' : ''}`} // Highlight in red if there's an error
                 id={name}
                 name={name}
                 type={type}
