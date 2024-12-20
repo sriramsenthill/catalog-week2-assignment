@@ -26,7 +26,7 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
             return;
         }
 
-        console.log('Form submitted successfully:', values);
+        alert(`Form submitted successfully!`);
     };
 
     return (

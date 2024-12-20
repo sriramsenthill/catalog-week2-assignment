@@ -6,14 +6,13 @@ export const validateForm = (fields: string[], values: FormData) => {
     fields.forEach(field => {
         const value = values[field]?.value;
 
-        // Check for required fields first
         if (!value) {
-            newErrors[field] = 'This field is required.'; // Set required error message
+            newErrors[field] = 'This field is required.';
         } else {
-            // Validate against specific rules if the field is not empty
+
             const errorMessage = validateField(field, value, values);
             if (errorMessage) {
-                newErrors[field] = errorMessage; // Set specific error message
+                newErrors[field] = errorMessage;
             }
         }
     });
@@ -28,9 +27,9 @@ const validateField = (name: string, value: string, values: FormData) => {
     for (const rule of fieldRules) {
         if (!rule.rule(value)) {
             errorMessage = rule.message;
-            break; // Stop checking further rules once an error is found
+            break;
         }
     }
 
-    return errorMessage; // Return the error message or an empty string if valid
+    return errorMessage;
 };
