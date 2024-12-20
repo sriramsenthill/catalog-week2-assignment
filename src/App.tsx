@@ -14,7 +14,7 @@ const App = () => {
   ];
 
   return (
-    <div className="bg-custom-gradient min-h-screen flex items-center justify-center"> {/* Use the custom gradient class */}
+    <div className="bg-custom-gradient min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full">
         <FormValidator fields={fields} />
       </div>

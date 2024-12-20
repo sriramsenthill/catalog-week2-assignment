@@ -5,7 +5,7 @@ import { FormData } from '../types/types';
 const useForm = (initialValues: FormData) => {
     const [values, setValues] = useState<FormData>(initialValues);
     const [errors, setErrors] = useState<Record<string, string>>({});
-    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null); // For managing the timeout
+    const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
     const validateField = (name: string, value: any) => {
         const fieldRules = values[name]?.validationRules || [];
@@ -14,11 +14,11 @@ const useForm = (initialValues: FormData) => {
         for (const rule of fieldRules) {
             if (!rule.rule(value)) {
                 errorMessage = rule.message;
-                break; // Stop checking further rules once an error is found
+                break;
             }
         }
 
-        return errorMessage; // Return the error message or an empty string if valid
+        return errorMessage;
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -28,27 +28,27 @@ const useForm = (initialValues: FormData) => {
             [name]: { ...prevValues[name], value }
         }));
 
-        // Clear error message when user types
+
         setErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: '', // Clear specific error
+            [name]: '',
         }));
 
-        // Clear previous timeout if it exists
+
         if (debounceTimeout) {
             clearTimeout(debounceTimeout);
         }
 
-        // Set a new timeout for validation
+
         const newTimeout = setTimeout(() => {
             const errorMessage = validateField(name, value);
             setErrors((prevErrors) => ({
                 ...prevErrors,
                 [name]: errorMessage,
             }));
-        }, 800); // 1000 ms delay
+        }, 800);
 
-        setDebounceTimeout(newTimeout); // Save the timeout ID
+        setDebounceTimeout(newTimeout);
     };
 
     const handleSubmit = (callback: () => void) => {
@@ -65,11 +65,11 @@ const useForm = (initialValues: FormData) => {
         });
 
         if (hasErrors) {
-            setErrors(newErrors); // Set all errors at once
-            return; // Prevent submission if there are errors
+            setErrors(newErrors);
+            return;
         }
 
-        callback(); // Call the provided callback function for successful submission
+        callback();
     };
 
     return { values, errors, handleChange, handleSubmit };

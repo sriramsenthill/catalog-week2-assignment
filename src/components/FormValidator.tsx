@@ -2,9 +2,9 @@
 import React from 'react';
 import useForm from '../hooks/useForm';
 import { Field } from '../types/types';
-import { validationRules } from '../validation/validationRules'; // Import your validation rules
-import { validateForm } from '../utils/formValidation'; // Import validation utility
-import FieldRenderer from './FieldRenderer'; // Import the field renderer
+import { validationRules } from '../validation/validationRules';
+import { validateForm } from '../utils/formValidation';
+import FieldRenderer from './FieldRenderer';
 
 interface FormValidatorProps {
     fields: Field[];
@@ -12,17 +12,17 @@ interface FormValidatorProps {
 
 const FormValidator = ({ fields }: FormValidatorProps) => {
     const initialValues = fields.reduce((acc, field) => {
-        acc[field.name] = { value: '', validationRules: validationRules[field.name] || [] }; // Apply validation rules here
+        acc[field.name] = { value: '', validationRules: validationRules[field.name] || [] };
         return acc;
     }, {} as Record<string, any>);
 
     const { values, errors, handleChange, handleSubmit, setErrors } = useForm(initialValues);
 
     const onSubmit = () => {
-        const newErrors = validateForm(fields.map(f => f.name), values); // Validate form fields
+        const newErrors = validateForm(fields.map(f => f.name), values);
 
         if (Object.keys(newErrors).length > 0) {
-            setErrors(newErrors); // Set errors if any
+            setErrors(newErrors);
             return;
         }
 

@@ -13,7 +13,7 @@ interface RadioGroupProps {
 const RadioGroup = ({ label, name, selectedValue, options, onChange, error }: RadioGroupProps) => (
     <fieldset className="mb-4 flex flex-col w-full gap-y-2">
         <label className="block mb-1 text-custom-gray font-bold" htmlFor={name}>
-            {label} {error && <span className="text-red-500">- Required</span>} {/* Show required message only if there's an error */}
+            {label} {error && <span className="text-red-500">- Required</span>}
         </label>
         <div className="flex items-center space-x-4">
             {options.map(option => (

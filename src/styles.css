@@ -38,8 +38,6 @@ body {
     }
 }
 
-/* Apply the fade-in animation to the form */
 .fade-in {
     animation: fadeIn 0.5s ease-in forwards;
-    /* Adjust duration and timing as needed */
 }

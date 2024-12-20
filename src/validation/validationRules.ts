@@ -4,15 +4,15 @@ import { ValidationRule } from '../types/types';
 export const validationRules: Record<string, ValidationRule[]> = {
     name: [
         { rule: (val) => !!val.trim(), message: 'Name is required' },
-        { rule: (val) => /^[A-Za-z\s]+$/.test(val), message: 'Name must contain only letters.' }, // New rule for only letters
+        { rule: (val) => /^[A-Za-z\s]+$/.test(val), message: 'Name must contain only letters.' },
     ],
     email: [
-        { rule: (val) => !!val.trim(), message: 'Email is required' }, // Added required check
+        { rule: (val) => !!val.trim(), message: 'Email is required' },
         { rule: (val) => /\S+@\S+\.\S+/.test(val), message: 'Email is invalid' },
     ],
     password: [
         {
-            rule: (val) => !!val.trim(), // Check for required
+            rule: (val) => !!val.trim(),
             message: 'Password is required',
         },
         {
@@ -24,7 +24,7 @@ export const validationRules: Record<string, ValidationRule[]> = {
     ],
     age: [
         {
-            rule: (val) => !!val.trim(), // Check for required
+            rule: (val) => !!val.trim(),
             message: 'Age is required',
         },
         {
@@ -36,9 +36,9 @@ export const validationRules: Record<string, ValidationRule[]> = {
         }
     ],
     city: [
-        { rule: (val) => !!val.trim(), message: 'City is required.' }, // Added required check
+        { rule: (val) => !!val.trim(), message: 'City is required.' },
     ],
     gender: [
-        { rule: (val) => !!val.trim(), message: 'Gender is required.' }, // Added required check
+        { rule: (val) => !!val.trim(), message: 'Gender is required.' },
     ],
 };

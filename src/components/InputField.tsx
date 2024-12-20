@@ -7,27 +7,27 @@ interface InputFieldProps {
     type?: string;
     value?: string;
     onChange?: React.ChangeEventHandler<HTMLInputElement>;
-    error?: string; // This will be used for custom error messages
+    error?: string;
 }
 
 const InputField = ({ label, name, type = "text", value, onChange, error }: InputFieldProps) => {
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
     const togglePasswordVisibility = () => {
-        setIsPasswordVisible(prev => !prev); // Toggle visibility
+        setIsPasswordVisible(prev => !prev);
     };
 
     return (
         <div className="mb-4 flex flex-col w-full gap-y-2">
             <label className="block mb-1 text-custom-gray font-bold" htmlFor={name}>
-                {label} {error && <span className="text-red-500">- Required</span>} {/* Show required message only if there's an error */}
+                {label} {error && <span className="text-red-500">- Required</span>}
             </label>
             <div className="relative">
                 <input
-                    className={`shadow-slate-300 text-custom-gray rounded-xl p-4 w-full focus:outline-none ${error ? 'border-red-500' : ''}`} // Highlight in red if there's an error
+                    className={`shadow-slate-300 text-custom-gray rounded-xl p-4 w-full focus:outline-none transition-colors duration-200 hover:bg-gray-50 ${error ? 'border-red-500' : ''}`}
                     id={name}
                     name={name}
-                    type={isPasswordVisible ? "text" : type} // Change type based on visibility
+                    type={isPasswordVisible ? "text" : type}
                     value={value}
                     onChange={onChange}
                 />
@@ -37,11 +37,11 @@ const InputField = ({ label, name, type = "text", value, onChange, error }: Inpu
                         onClick={togglePasswordVisibility}
                         className="absolute right-3 top-1/2 transform -translate-y-1/2 text-custom-gray"
                     >
-                        {isPasswordVisible ? 'Hide' : 'Show'} {/* Toggle button text */}
+                        {isPasswordVisible ? 'Hide' : 'Show'}
                     </button>
                 )}
             </div>
-            {error && <p className="text-red-500 text-sm">{error}</p>} {/* Display error message */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
         </div>
     );
 };
