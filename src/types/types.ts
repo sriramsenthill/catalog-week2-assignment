@@ -1,20 +1,17 @@
 // src/types/types.ts
 
-// Define the type for validation rules
 export interface ValidationRule {
-    rule: (value: string | number) => boolean;
+    rule: (value: any) => boolean; // Adjust type as necessary
     message: string;
 }
 
-// Define the shape of initial values for form fields
-export interface FormField<T> {
-    value?: T;
+export interface FormField {
+    value: any; // Adjust type based on expected input types
     validationRules?: ValidationRule[];
 }
 
-// Define the shape of your form data using generics
 export interface FormData {
-    [key: string]: FormField<any>;
+    [key: string]: FormField; // Dynamic keys for form fields
 }
 
 // Define the shape of a field used in FormValidator component
