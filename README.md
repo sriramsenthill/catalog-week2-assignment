@@ -38,7 +38,14 @@ Before using this package, ensure you have the following dependencies installed:
 npm i garden-themed-form
 ```
 
-2. Configure your `tsconfig.json`:
+2. Install Tailwind CSS and its dependencies:
+```bash
+npm install -D tailwindcss postcss autoprefixer
+npm install vite-plugin-lib-inject-css
+npx tailwindcss init -p
+```
+
+3. Configure your `tsconfig.json`:
 ```json
 {
   "compilerOptions": {
@@ -60,7 +67,7 @@ npm i garden-themed-form
 }
 ```
 
-3. Update your `tailwind.config.js`:
+4. Update your `tailwind.config.js`:
 ```javascript
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -86,7 +93,31 @@ export default {
 };
 ```
 
-4. Configure your CSS (`index.css`):
+5. Configure your `postcss.config.js`:
+```javascript
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+```
+
+6. Set up your `vite.config.ts`:
+```typescript
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { libInjectCss } from 'vite-plugin-lib-inject-css';
+
+export default defineConfig({
+  plugins: [
+    react(),
+    libInjectCss(),
+  ],
+});
+```
+
+7. Configure your CSS (`index.css`):
 ```css
 @tailwind base;
 @tailwind components;
@@ -147,6 +178,15 @@ npm run dev
 npm run build
 ```
 
+## Troubleshooting
+
+If you encounter any styling issues:
+- Ensure all configuration files are properly set up
+- Clear your cache and node_modules: `rm -rf node_modules && npm install`
+- Rebuild your project: `npm run build`
+- Check if all peer dependencies are installed correctly
+
 ## Contributing
 
 Contributions are welcome! Feel free to submit issues and pull requests.
+
