@@ -1,50 +1,152 @@
-# React + TypeScript + Vite
+# Garden-Themed Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A beautiful and functional form validator inspired by www.garden.finance, featuring clean UI and advanced validation with debouncing. This package provides a simple yet powerful form validation solution with a garden-inspired theme.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live demo: [Garden-Themed Form Demo](https://catalog-week2-assignment.vercel.app/)
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Clean, garden-inspired UI design
+- Form validation with debouncing
+- Support for multiple input types (text, email, password, number, select, radio)
+- Built with TypeScript and React
+- Tailwind CSS integration
+- Easy to customize and extend
 
-- Configure the top-level `parserOptions` property like this:
+## Installation
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
+To use the published package in your project:
+
+```bash
+npm i garden-themed-form
+```
+
+## Prerequisites
+
+Before using this package, ensure you have the following dependencies installed:
+
+- Tailwind CSS
+- Vite
+- React
+
+## Setup Instructions
+
+1. Install the package:
+```bash
+npm i garden-themed-form
+```
+
+2. Configure your `tsconfig.json`:
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}
+```
+
+3. Update your `tailwind.config.js`:
+```javascript
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    './node_modules/garden-themed-form/dist/**/*.{js,jsx,ts,tsx}',
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to bottom, #c9edde, #d1e4fa)',
+      },
+      colors: {
+        'custom-gray': '#55525d',
+      },
+      fontFamily: {
+        satoshi: ['Satoshi', 'Helvetica Neue', 'sans-serif'],
+      },
     },
   },
-})
+  plugins: [],
+};
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+4. Configure your CSS (`index.css`):
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 ```
+
+## Usage Example
+
+```tsx
+import React from "react";
+import { FormValidator } from 'garden-themed-form';
+
+const App = () => {
+  interface Field {
+    name: string;
+    type?: string;
+    options?: string[];
+  }
+
+  const fields: Field[] = [
+    { name: 'name', type: 'text' },
+    { name: 'email', type: 'email' },
+    { name: 'password', type: 'password' },
+    { name: 'age', type: 'number' },
+    { name: 'city', type: 'select', options: ['New York', 'Los Angeles', 'Chicago', 'Houston'] },
+    { name: 'gender', type: 'radio', options: ['Male', 'Female'] }
+  ];
+
+  return (
+    <div className="bg-custom-gradient min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full">
+        <FormValidator fields={fields} />
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## Development
+
+If you want to contribute to this project:
+
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Run the development server:
+```bash
+npm run dev
+```
+
+4. Build the project:
+```bash
+npm run build
+```
+
+## Contributing
+
+Contributions are welcome! Feel free to submit issues and pull requests.
