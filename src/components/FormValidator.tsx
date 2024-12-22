@@ -1,9 +1,10 @@
-// src/components/FormValidator.tsx
+import React from 'react';
 import useForm from '../hooks/useForm';
 import { Field } from '../types/types';
 import { validationRules } from '../validation/validationRules';
 import { validateForm } from '../utils/formValidation';
 import FieldRenderer from './FieldRenderer';
+import '../index.css';
 
 interface FormValidatorProps {
     fields: Field[];
@@ -27,7 +28,6 @@ const FormValidator = ({ fields }: FormValidatorProps) => {
 
         alert(`Form submitted successfully!`);
 
-        // Refresh the page after successful submission
         window.location.reload();
     };
 

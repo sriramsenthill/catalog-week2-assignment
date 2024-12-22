@@ -3,6 +3,7 @@ import InputField from './InputField';
 import SelectField from './SelectField';
 import RadioGroup from './RadioGroup';
 import { Field } from '../types/types';
+import '../index.css';
 
 interface FieldRendererProps {
     field: Field;

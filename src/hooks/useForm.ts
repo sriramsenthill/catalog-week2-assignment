@@ -1,4 +1,3 @@
-// src/hooks/useForm.ts
 import { useState } from 'react';
 import { FormData, ValidationRule } from '../types/types';
 
@@ -7,7 +6,7 @@ interface UseFormReturn {
     errors: Record<string, string>;
     handleChange: (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
     handleSubmit: (callback: () => void) => void;
-    setErrors: (errors: Record<string, string>) => void; // Add setErrors to return type
+    setErrors: (errors: Record<string, string>) => void;
 }
 
 const useForm = (initialValues: FormData): UseFormReturn => {
@@ -62,23 +61,23 @@ const useForm = (initialValues: FormData): UseFormReturn => {
         let hasErrors = false;
 
         Object.keys(values).forEach((key) => {
-            const value = values[key].value; // Get the current value of the field
-            const errorMessage = validateField(key, value); // Validate the field
+            const value = values[key].value;
+            const errorMessage = validateField(key, value);
             if (errorMessage) {
-                newErrors[key] = errorMessage; // Store the error message
-                hasErrors = true; // Mark that there are errors
+                newErrors[key] = errorMessage;
+                hasErrors = true;
             }
         });
 
         if (hasErrors) {
-            setErrors(newErrors); // Update state with errors if any
-            return; // Prevent callback execution if there are errors
+            setErrors(newErrors);
+            return;
         }
 
-        callback(); // Call the provided callback function if no errors exist
+        callback();
     };
 
-    return { values, errors, handleChange, handleSubmit, setErrors }; // Return setErrors here
+    return { values, errors, handleChange, handleSubmit, setErrors };
 };
 
 export default useForm;

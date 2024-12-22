@@ -1,5 +1,5 @@
-// src/components/RadioGroup.tsx
 import React from 'react';
+import '../index.css';
 
 interface RadioGroupProps {
     label: string;

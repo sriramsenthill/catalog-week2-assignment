@@ -1,6 +1,6 @@
-// src/App.tsx
 import FormValidator from './components/FormValidator';
 import { Field } from './types/types';
+import React from 'react';
 
 const App = () => {
   const fields: Field[] = [

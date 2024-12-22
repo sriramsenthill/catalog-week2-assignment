@@ -1,20 +1,27 @@
 {
-  "name": "npm-package",
-  "private": true,
-  "version": "0.0.0",
+  "name": "garden-themed-form",
+  "private": false,
+  "version": "1.0.2",
   "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "garden-form-validator-test": "^1.0.0",
+    "garden-test-form": "^1.12.0",
+    "garden-themed-form": "^1.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
+    "@swc/core": "^1.10.1",
     "@types/node": "^22.10.2",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
@@ -28,6 +35,7 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.15.0",
-    "vite": "^6.0.1"
+    "vite": "^6.0.1",
+    "vite-plugin-lib-inject-css": "^2.1.1"
   }
 }

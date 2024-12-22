@@ -1,5 +1,5 @@
-// src/components/InputField.tsx
 import React, { useState } from 'react';
+import '../index.css';
 
 interface InputFieldProps {
     label: string;
